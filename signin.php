@@ -7,9 +7,25 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Signin Template for HCC Online Testing Form System</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +51,7 @@
 
     <div class="container">
      
-      <form class="form-signin">
+        <form action="<?php $_SERVER['PHP_SELF']; ?>" class="form-signin" method="POST">
         <img class="img-responsive" src="img/HCC Houston Community College Logo.png"  />
         <h3 class="text-center">HCC Online Testing Information Form</h3>
         <h5 class="panel-title">Please sign in</h5>
@@ -45,6 +61,7 @@
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required autocomplete="off">
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br /><a href="register_user.php">Not a registered user? Sign up!</a>
       </form>
 
     </div> <!-- /container -->
