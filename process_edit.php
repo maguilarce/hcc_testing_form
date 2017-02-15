@@ -1,8 +1,10 @@
 <?php
 include('dconnection.php');
+session_start();
 /*
 Receiving all data from the testing form (validate through HTML atributes
  *  */
+
 $id = $_POST['id'];
 $fname = $_POST['FirstName'];
 $lname = $_POST['LastName'];
@@ -12,14 +14,14 @@ $other_phone = $_POST['OtherPhone'];
 $phone_type = $_POST['type_of_phone'];
 $give_stud = $_POST['give_to_students'];
 $course = $_POST['offered_courses'];
-$crn = implode("<br/>",$_POST['crn']);
+$crn = implode(" ",$_POST['crn']);
 $term = $_POST['term'];
 $online_test = $_POST['test-online'];
 $password = $_POST['password'];
 $testing_center = $_POST['testingCenter'];
 $delivered_campus = $_POST['onsiteTest'];
 $campus_location = $_POST['campusLocation'];
-$exam_instructions = $_POST['test_instructions'];
+$exam_instructions = $_POST['test-instructions'];
 $special_instructions = $_POST['special-instructions'];
 $date = date('Y-m-d H:i:s');
 $semester = '6172';
@@ -33,7 +35,7 @@ $online_proctor_dates = array();
 $online_proctor_dates_O = array();
 $online_time_slot = array();
 
-$sql1 = "UPDATE schedule_test SET "
+/*$sql1 = "UPDATE schedule_test SET "
         . "date_submitted = '$date',"
         . "semester = '$semester',"
         . "fname = '$fname',"
@@ -47,5 +49,13 @@ $sql1 = "UPDATE schedule_test SET "
         . ""
         . ""
         . ""
-        . "WHERE id = '$id'";
+        . "WHERE id = '$id'";*/
+
+
+echo '<pre>';  
+print_r($_POST);
+echo '</pre>';
+echo '<pre>';  
+print_r($_SESSION);
+echo '</pre>';
         

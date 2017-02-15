@@ -37,12 +37,9 @@
                       <a href="#" class="dropdown-toggle pull-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user_name']; ?> <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                           <li><a href="signout.php">Sign Out</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li role="separator" class="divider"></li>
-                          <li class="dropdown-header">Nav header</li>
-                          <li><a href="#">Separated link</a></li>
-                          <li><a href="#">One more separated link</a></li>
+                          <li><a href="#">Manage Users</a></li>
+                          <li><a href="#">Manage Term Info</a></li>
+
                       </ul>
                   </li>
               </ul>

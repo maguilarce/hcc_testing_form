@@ -3,6 +3,7 @@ include('dconnection.php');
 /*
 Receiving all data from the testing form (validate through HTML atributes
  *  */
+print_r($_POST['crn']);
 $fname = $_POST['FirstName'];
 $lname = $_POST['LastName'];
 $email = $_POST['EmailAddress'];
@@ -12,7 +13,7 @@ $other_phone = $_POST['OtherPhone'];
 $phone_type = $_POST['type_of_phone'];
 $give_stud = $_POST['give_to_students'];
 $course = $_POST['offered_courses'];
-$crn = implode("<br/>",$_POST['crn']);
+$crn = implode(" ",$_POST['crn']);
 $term = $_POST['term'];
 $online_test = $_POST['test-online'];
 $password = $_POST['password'];

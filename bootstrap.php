@@ -51,13 +51,13 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#online-option').attr('disabled', 'disabled');
+        $('#online-option').attr('readonly', 'readonly');
         $('select[name="test-online"]').on('change', function () {
             var others = $(this).val();
             if (others == "Yes") {
-                $('#online-option').removeAttr('disabled');
+                $('#online-option').removeAttr('readonly');
             } else {
-                $('#online-option').attr('disabled', 'disabled');
+                $('#online-option').attr('readonly', 'readonly');
             }
 
         });

@@ -142,7 +142,7 @@ $result2 = $mysqli->query($sql2);
                                 </div>
                                 <div class="col-sm-4 form-group" id="crnAjax">
                                     <label>CRN</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <select multiple name="crn" class="form-control" required >
+                                    <select multiple name="crn[]" class="form-control" required >
                                         <?php
                                         $course = $row1['course'];
                                         $sql = "SELECT CRN FROM courses WHERE Title = '$course' and Term = 6172";
@@ -150,6 +150,7 @@ $result2 = $mysqli->query($sql2);
 
                                         $crn = array();
                                         $crn = preg_split('/\s+/', $row1['crn']);
+                                      
                                         //$i = 0;
                                         while ($crn1 = $result->fetch_assoc()) {
                                             foreach ($crn1 as $c1) {
@@ -203,7 +204,7 @@ $result2 = $mysqli->query($sql2);
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>If yes, please provide a password</label>
-                                    <input id="online-option" name='password' type="text" placeholder="Enter Password Here.." class="form-control" value="<?php echo $row1['password']; ?>">
+                                    <input id="online-option" name='password' type="text" class="form-control" value="<?php echo $row1['password']; ?>">
                                 </div>
                             </div>
                             <div class="row center-block">
@@ -527,7 +528,7 @@ $result2 = $mysqli->query($sql2);
                                 </div>        
                                 <div class="row center-block form-group">
                                     <!--                                    <a href="#modal-dialog" class="modal-toggle btn btn-lg btn-info" data-toggle="modal" data-href="submit.php" data-modal-type="confirm">Submit</a>-->
-                                    <input type="submit" class="modal-toggle btn  btn-primary" data-href="submit.php" data-modal-type="confirm"></button>
+                                    <input type="submit" class="modal-toggle btn  btn-primary" data-href="submit.php" data-modal-type="confirm" value="Apply changes"></button>
                                     <button type="button" class="btn btn-primary">Reset</button>	
                                     <p><i class="fa fa-asterisk text-danger">(*) Required Fields</i></p>
                                 </div>
