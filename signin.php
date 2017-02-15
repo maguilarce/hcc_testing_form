@@ -1,3 +1,43 @@
+<?php
+include('dconnection.php');
+session_start();
+
+if(isset($_SESSION['id_usuario']))
+{
+    header('location: index.php');
+}
+
+if(!empty($_POST))
+{
+    $user = mysqli_real_escape_string($mysqli,$_POST['email']);
+    $password = mysqli_real_escape_string($mysqli,$_POST['password']);
+    $error = '';
+    
+    //encrypt password
+    $encrypted_password = sha1($password);
+    
+    //querying DB
+    $sql = "SELECT * FROM user_testing_form WHERE user_name = '$user' AND password = '$encrypted_password'";
+    $result = $mysqli->query($sql);
+    $rows = $result->num_rows;
+    
+    if($rows>0)
+    {
+        $row = $result->fetch_assoc();
+        $_SESSION['id_user'] = $row['id_user'];
+        $_SESSION['id_type'] = $row['id_type'];
+        $_SESSION['user_name'] = $row['user_name'];
+        
+        header("location: index.php");
+    }
+    else
+    {
+        $error = "User does not exist or email/password are incorrect";
+    }
+    
+}   
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,24 +90,43 @@
   <body>
 
     <div class="container">
-     
+        <?php
+        if(isset($error))
+        {
+            echo "<div class='alert alert-danger' role='alert'>";
+                echo "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>";
+                echo "<span class='sr-only'>Error:</span>";
+                echo utf8_decode($error);
+            echo "</div>";
+        }
+        ?>
         <form action="<?php $_SERVER['PHP_SELF']; ?>" class="form-signin" method="POST">
         <img class="img-responsive" src="img/HCC Houston Community College Logo.png"  />
         <h3 class="text-center">HCC Online Testing Information Form</h3>
-        <h5 class="panel-title">Please sign in</h5>
-        <label for="inputEmail" class="sr-only">Email address</label><br />
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus autocomplete="off"><br />
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required autocomplete="off">
+        <h5 class="panel-title">Please sign in</h5><br/>
+        
+        <label>Email address</label><br />
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus autocomplete="off"><br />
+        
+        <label>Password</label><br />
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required autocomplete="off">
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <br /><a href="register_user.php">Not a registered user? Sign up!</a>
+        <br /><p class="text-muted text-center"><a href="register_user.php">Not a registered user? Sign up!</a></p>
+                
       </form>
 
+
     </div> <!-- /container -->
-
-
+    
+    <footer class="footer center-block">
+      <div class="container center-block">
+        <p class="text-muted text-center">© 2017 Houston Community College, 3100 Main St., Houston TX 77002, Ph. 713.718.2000</p>
+        <p class="text-muted text-center"><a href="http://hccs.edu">HCC</a> | <a href="http://hccs.edu/online">HCC Online</a> | <a href="contact.php">Contact Us</a></p>
+      </div>
+    </footer>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
   </body>
 </html>

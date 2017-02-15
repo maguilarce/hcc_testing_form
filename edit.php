@@ -1,9 +1,18 @@
 <?php
+include('dconnection.php');
+session_start();
+//print_r($_SESSION);
 include('head.php');
-include('navbar.php');
+if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')
+{
+   include('navbar.php'); 
+}
+else
+{
+    include('navbar_faculty.php'); 
+}
 include('bootstrap.php');
 include('footer.php');
-include('dconnection.php');
 
 $id = $_GET['id'];
 $sql1 = "SELECT * FROM scheduled_test WHERE id='$id'";
@@ -36,7 +45,7 @@ $result2 = $mysqli->query($sql2);
                             <div class="row center-block">
                                 <div class="col-sm-6 form-group">
                                     <label>Email Address</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <input  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Invalid email format" name='EmailAddress' type="text" placeholder="Enter Email Address Here.." class="form-control" value="<?php echo $row1['email']; ?>" disabled>
+                                    <input  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Invalid email format" name='EmailAddress' type="text" placeholder="Enter Email Address Here.." class="form-control" value="<?php echo $row1['email']; ?>" readonly>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Home Campus</label><i class="fa fa-asterisk text-danger">*</i>

@@ -1,9 +1,30 @@
 <?php
+include('dconnection.php');
+session_start();
+
 include('head.php');
-include('navbar.php');
+
+if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')
+{
+   include('navbar.php'); 
+}
+else
+{
+    include('navbar_faculty.php'); 
+}
+
+
 include('bootstrap.php');
 include('footer.php');
-include('dconnection.php');
+
+//print_r($_SESSION);
+$user_id = $_SESSION['id_user'];
+$user_name = $_SESSION['user_name'];
+
+$user_data = "SELECT * FROM faculty WHERE FacNo = '$user_id'";
+$result_user_data = $mysqli->query($user_data);
+$user_row = $result_user_data->fetch_assoc();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,17 +38,17 @@ include('dconnection.php');
                             <div class="row center-block">
                                 <div class="col-sm-6 form-group">
                                     <label>First Name</label><i class="text-danger">*</i>
-                                    <input name='FirstName' type="text" placeholder="Enter First Name Here.." class="form-control " required>
+                                    <input name='FirstName' type="text" class="form-control" value = "<?php echo $user_row['FirstName']; ?>" readonly>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Last Name</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <input name='LastName' type="text" placeholder="Enter Last Name Here.." class="form-control" required>
+                                    <input name='LastName' type="text" class="form-control" value = "<?php echo $user_row['LastName']; ?>" readonly>
                                 </div>
                             </div>
                             <div class="row center-block">
                                 <div class="col-sm-6 form-group">
                                     <label>Email Address</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <input pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Invalid email format" name='EmailAddress' type="text" placeholder="Enter Email Address Here.." class="form-control" required>
+                                    <input pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Invalid email format" name='EmailAddress' type="text" class="form-control" value = "<?php echo $user_name; ?>" readonly>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Home Campus</label><i class="fa fa-asterisk text-danger">*</i>

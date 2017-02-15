@@ -1,9 +1,19 @@
 <?php
+include('dconnection.php');
+session_start();
+//print_r($_SESSION);
 include('head.php');
-include('navbar.php');
+if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')
+{
+   include('navbar.php'); 
+}
+else
+{
+    include('navbar_faculty.php'); 
+}
 include('bootstrap.php');
 include('footer.php');
-include('dconnection.php');
+$user = $_SESSION['user_name'];
 ?>
 <html lang="en">
     <body>
@@ -49,12 +59,20 @@ include('dconnection.php');
 
                         </thead>
                         <tbody>
-                            <?php 
-                            $sql = 'SELECT * FROM scheduled_test';
+                            <?php
+                            
+                            if($_SESSION['id_type']!='1'&&$_SESSION['id_type']!='2')
+                            {
+                                $sql = "SELECT * FROM scheduled_test where email = '$user'";
+                            }
+                            else
+                            {
+                                $sql = "SELECT * FROM scheduled_test";
+                            }
                             $result = $mysqli->query($sql);
                            
-                            $sqlpp = "SELECT * FROM online_testing WHERE";
-                            $sqlol = "SELECT * FROM paper_testing WHERE";
+                            //$sqlpp = "SELECT * FROM online_testing WHERE";
+                            //$sqlol = "SELECT * FROM paper_testing WHERE";
                             while ($row = $result->fetch_assoc()) { 
 
                                 $id = $row['id'];

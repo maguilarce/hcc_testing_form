@@ -1,8 +1,19 @@
 <?php
+include('dconnection.php');
+session_start();
+//print_r($_SESSION);
 include('head.php');
-include('navbar.php');
+if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')
+{
+   include('navbar.php'); 
+}
+else
+{
+    include('navbar_faculty.php'); 
+}
 include('bootstrap.php');
 include('footer.php');
+$user = $_SESSION['user_name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
