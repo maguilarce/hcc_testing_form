@@ -529,13 +529,15 @@ $result2 = $mysqli->query($sql2);
                                 <div class="row center-block form-group">
                                     <!--                                    <a href="#modal-dialog" class="modal-toggle btn btn-lg btn-info" data-toggle="modal" data-href="submit.php" data-modal-type="confirm">Submit</a>-->
                                     <input type="submit" class="modal-toggle btn  btn-primary" data-href="submit.php" data-modal-type="confirm" value="Apply changes"></button>
-                                    <button type="button" class="btn btn-primary">Reset</button>	
+                                    <button type="reset"  class="btn btn-primary">Reset</button>	
                                     <p><i class="fa fa-asterisk text-danger">(*) Required Fields</i></p>
                                 </div>
 
                             </div>
                         </div>
                     </div>
+                    
+                    
                     <!--Modal Submit Confirmation-->
                     <div id="modal-dialog" class="modal">
                         <div class="modal-dialog">
@@ -554,6 +556,9 @@ $result2 = $mysqli->query($sql2);
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
                 </form> 
             </div> <!-- /container -->
     </body>

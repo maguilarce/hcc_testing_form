@@ -125,11 +125,14 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
         // when any option from offered_courses list is selected
-        jQuery("select[name='offered_courses']").change(function () {
-
+        //jQuery("select[name='offered_courses']").change(function () {
+        jQuery("select[name='term']").change(function () {
             var ajaxLoader = "<img src='../ajax-loader.gif' alt='loading...' />";
             // get the selected option value of offered_courses
-            var optionValue = jQuery("select[name='offered_courses']").val();
+            //  var optionValue = jQuery("select[name='offered_courses']").val();
+            var optionValue = jQuery("select[name='term']").val();
+            var course = jQuery("select[name='offered_courses']").val();
+            var semester = "6172";
 
             /**
              * pass offered_courses value through POST method
@@ -139,7 +142,7 @@
              */
             jQuery("#crnAjax")
                     //.html(ajaxLoader)
-                    .load('process_crn.php', {offered_course: optionValue, status: 1}, function (response) {
+                    .load('process_crn.php', {term: optionValue, semester: semester, course: course, status: 1}, function (response) {
                         if (response) {
                             jQuery("#crnAjax").css('display', '');
                             //jQuery("#crnAjax").css('disabled, '');
@@ -356,3 +359,19 @@
 
 
 </script>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        $("#test-online").change(function (e) {
+            if ($("#test-online").val() == 'No') {
+                $("input[name^='online']").removeAttr('disabled');
+                $("select[name^='online']").attr('disabled', 'disabled');
+            } else {
+                $("select[name^='online']").removeAttr('disabled');
+                $("input[name^='online']").attr('disabled', 'disabled');
+            }
+        });
+        $("#test-online").trigger('change');
+    });
+</script>
+
+

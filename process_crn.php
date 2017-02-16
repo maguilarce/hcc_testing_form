@@ -1,14 +1,15 @@
 <?php
 include('dconnection.php');
-$course = $_POST['offered_course'];
-
+$term = $_POST['term'];
+$semester = $_POST['semester'];
+$course = $_POST['course'];
 if (!$course) {
 
     return false;
 }
 
 
-$sql = "SELECT CRN FROM courses WHERE Title = '$course' and Term = 6172";
+$sql = "SELECT CRN FROM courses WHERE Title = '$course' and Term = '$semester' and Session = '$term'";
 $result = $mysqli->query($sql);
 ?>
 

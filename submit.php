@@ -84,7 +84,7 @@ for($i=0;$i<5;$i++)
     
     $online_proctor_dates[$i] = $_POST['online_proctor_date'.$i];
     $online_proctor_dates_O[$i] = $_POST['online_proctor_date_O'.$i];
-    $online_time_slot[$i] = $_POST['oline-time-slot-'.$i];
+    $online_time_slot[$i] = $_POST['online-time-slot-'.$i];
     
     if($paper_proctor_dates[$i]!="None")
     {
