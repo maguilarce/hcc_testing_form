@@ -3,8 +3,8 @@ include('dconnection.php');
 /*
 Receiving all data from the testing form (validate through HTML atributes
  *  */
-print_r($_POST['crn']);
-$fname = $_POST['FirstName'];
+
+$fname = mysqli_real_escape_string($mysqli,$_POST['FirstName']);
 $lname = $_POST['LastName'];
 $email = $_POST['EmailAddress'];
 $home_campus = $_POST['HomeCampus'];
@@ -35,12 +35,12 @@ $exam_instructions =
 $special_instructions = $_POST['special-instructions'];
 $date = date('Y-m-d H:i:s');
 
-//paper-pencil exams (10 exams)
+//paper-pencil exams (5 exams max)
 $paper_proctor_dates = array();
 $paper_proctor_dates_P = array();
 $paper_proctor_time_slot = array();
 
-//online exams (10 exams)
+//online exams (5 exams max)
 $online_proctor_dates = array();
 $online_proctor_dates_O = array();
 $online_time_slot = array();
@@ -64,7 +64,8 @@ $sql = "INSERT INTO scheduled_test VALUES ('','$date','6172',"
         . "'$delivered_campus',"
         . "'$campus_location',"
         . "'$exam_instructions',"
-        . "'$special_instructions')";
+        . "'$special_instructions',"
+        . " 'Active');";
 
 $result = $mysqli->query($sql);
 echo $crn;
@@ -88,13 +89,13 @@ for($i=0;$i<5;$i++)
     
     if($paper_proctor_dates[$i]!="None")
     {
-        $sql = "INSERT INTO paper_testing VALUES ('','$last_id','$paper_proctor_dates[$i]','$paper_proctor_dates_P[$i]','$paper_proctor_time_slot[$i]')";
+        $sql = "INSERT INTO paper_testing VALUES ('','$last_id','$paper_proctor_dates[$i]','$paper_proctor_dates_P[$i]','$paper_proctor_time_slot[$i]','Active')";
         $mysqli->query($sql);
     }
     
     if($online_proctor_dates[$i]!="None")
     {
-        $sql = "INSERT INTO online_testing VALUES ('','$last_id','$online_proctor_dates[$i]','$online_proctor_dates_O[$i]','$online_time_slot[$i]')";
+        $sql = "INSERT INTO online_testing VALUES ('','$last_id','$online_proctor_dates[$i]','$online_proctor_dates_O[$i]','$online_time_slot[$i]','Active')";
         $mysqli->query($sql);
     }
     

@@ -1,20 +1,16 @@
 <?php
+date_default_timezone_set('America/Chicago');
 include('dconnection.php');
 session_start();
-
 include('head.php');
-
 if ($_SESSION['id_type'] == '1' || $_SESSION['id_type'] == '2') {
     include('navbar.php');
 } else {
     include('navbar_faculty.php');
 }
-
-
 include('bootstrap.php');
 include('footer.php');
 
-//print_r($_SESSION);
 $user_id = $_SESSION['id_user'];
 $user_name = $_SESSION['user_name'];
 
@@ -254,9 +250,9 @@ $semester = "6172";
                                     if ($result->num_rows > 0) {
                                         for ($i = 0; $i < 5; $i++) {
                                             $result = $mysqli->query($sql);
-                                            echo "<input value='' type='hidden' name='online_proctor_date" . $i ."'>";
+                                            echo "<input value='' type='hidden' name='online_proctor_date" . $i . "'>";
                                             echo "<select name='online_proctor_date" . $i . "' class='form-control'><option selected='true'>None</option>";
-                                            
+
                                             while ($online_exam_dates = $result->fetch_assoc()) {
 
 
@@ -278,9 +274,9 @@ $semester = "6172";
                                                 for ($i = 0; $i < 5; $i++) {
                                                     $result = $mysqli->query($sql);
                                                     // echo "<select name='online_proctor_date_O" . $i . " class='form-control'><option selected='true'>None</option>";
-                                                     echo "<input type='hidden' name='online_proctor_date_O" . $i ."'>";
+                                                    echo "<input type='hidden' name='online_proctor_date_O" . $i . "'>";
                                                     echo "<select name='online_proctor_date_O" . $i . "' class='form-control'><option selected='true'>None</option>";
-                                                   
+
                                                     while ($online_exam_dates = $result->fetch_assoc()) {
                                                         $begin = new DateTime($online_exam_dates['start_date']);
                                                         $end = new DateTime($online_exam_dates['end_date']);
@@ -306,7 +302,7 @@ $semester = "6172";
                                         if ($result->num_rows > 0) {
                                             for ($i = 0; $i < 5; $i++) {
                                                 $result = $mysqli->query($sql);
-                                                echo "<input type='hidden' name='online-time-slot-" . $i ."'>";
+                                                echo "<input type='hidden' name='online-time-slot-" . $i . "'>";
                                                 echo "<select name='online-time-slot-" . $i . "' class='form-control'><option selected='true'>None</option>";
                                                 echo "<option value='Thursday 10:00 am - 2:00 pm'>Thursday 10:00 am - 2:00 pm</option>";
                                                 echo "<option value='Thursday 2:00 pm - 6:00 pm'>Thursday 2:00 pm - 6:00 pm</option>";
@@ -409,20 +405,20 @@ $semester = "6172";
 
 
 
-                                <!--                                CONFIRM SUBMISSION-->
+                                <!--CONFIRM SUBMISSION-->
                                 <div class="row center-block form-group">
-<!--                                    <input type="submit" class="btn  btn-primary" value="Submit">-->
                                     <input id="submit" type="submit"  class="btn btn-primary">
                                     <button type="reset" class="btn btn-primary">Reset</button>	
                                     <p><i class="fa fa-asterisk text-danger">(*) Required Fields</i></p>
                                 </div>
 
+
                             </div>
                         </div>
                     </div>
 
-               
-                  
+
+
                 </form> 
 
 

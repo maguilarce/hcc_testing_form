@@ -1,26 +1,22 @@
 <?php
+date_default_timezone_set('America/Chicago');
 include('dconnection.php');
 session_start();
 //print_r($_SESSION);
 include('head.php');
-if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')
-{
-   include('navbar.php'); 
-}
-else
-{
-    include('navbar_faculty.php'); 
+if ($_SESSION['id_type'] == '1' || $_SESSION['id_type'] == '2') {
+    include('navbar.php');
+} else {
+    include('navbar_faculty.php');
 }
 include('bootstrap.php');
 include('footer.php');
 
-$id = $_GET['id'];
-$sql1 = "SELECT * FROM scheduled_test WHERE id='$id'";
+$id = $_POST['id'];
+$sql1 = "SELECT * FROM scheduled_test WHERE id='$id' AND state = 'Active'";
 $result1 = $mysqli->query($sql1);
 $row1 = $result1->fetch_assoc();
-
-$sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id'";
-$result2 = $mysqli->query($sql2);
+$semester = "6172";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,24 +24,24 @@ $result2 = $mysqli->query($sql2);
         <div class="container">
             <h1 class="well">Edit Form</h1>
             <div class="col-lg-12 well">
-                <form method="post" action="process_edit.php">
+                <form role="form" id="form" method="post" action="process_edit.php" onsubmit="return confirm('Submit this form?')">    
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="row center-block">
                         <div class="col-sm-12">
                             <div class="row center-block">
                                 <div class="col-sm-6 form-group">
                                     <label>First Name</label><i class="text-danger">*</i>
-                                    <input name='FirstName' type="text" placeholder="Enter First Name Here.." class="form-control " value="<?php echo $row1['fname']; ?>" required>
+                                    <input name='FirstName' type="text" class="form-control " value="<?php echo $row1['fname']; ?>" readonly>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Last Name</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <input name='LastName' type="text" placeholder="Enter Last Name Here.." class="form-control" value="<?php echo $row1['lname']; ?>" required>
+                                    <input name='LastName' type="text" class="form-control" value="<?php echo $row1['lname']; ?>" readonly>
                                 </div>
                             </div>
                             <div class="row center-block">
                                 <div class="col-sm-6 form-group">
                                     <label>Email Address</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <input  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Invalid email format" name='EmailAddress' type="text" placeholder="Enter Email Address Here.." class="form-control" value="<?php echo $row1['email']; ?>" readonly>
+                                    <input  name='EmailAddress' type="text" class="form-control" value="<?php echo $row1['email']; ?>" readonly>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Home Campus</label><i class="fa fa-asterisk text-danger">*</i>
@@ -140,6 +136,25 @@ $result2 = $mysqli->query($sql2);
                                         ?>
                                     </select>
                                 </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Term</label><i class="fa fa-asterisk text-danger">*</i>
+                                    <select name="term" class="form-control" required>
+
+                                        <?php
+                                        $sql2 = "SELECT * FROM sessions WHERE Term = '$semester'";
+                                        $result2 = $mysqli->query($sql2);
+                                        while ($row2 = $result2->fetch_assoc()) {
+                                            if ($row2['Session'] != $row1['term']) {
+                                                echo "<option value = '" . $row2['Session'] . "'>" . $row2['Session'] . "</option>";
+                                            } else {
+                                                echo "<option selected='true' value = '" . $row2['Session'] . "'>" . $row2['Session'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+
                                 <div class="col-sm-4 form-group" id="crnAjax">
                                     <label>CRN</label><i class="fa fa-asterisk text-danger">*</i>
                                     <select multiple name="crn[]" class="form-control" required >
@@ -150,7 +165,7 @@ $result2 = $mysqli->query($sql2);
 
                                         $crn = array();
                                         $crn = preg_split('/\s+/', $row1['crn']);
-                                      
+
                                         //$i = 0;
                                         while ($crn1 = $result->fetch_assoc()) {
                                             foreach ($crn1 as $c1) {
@@ -160,27 +175,6 @@ $result2 = $mysqli->query($sql2);
                                                     echo "<option value='$c1'>" . $c1 . "</option>";
                                                 }
                                             }
-                                        }
-                                        ?>
-
-                                    </select>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Term</label><i class="fa fa-asterisk text-danger">*</i>
-                                    <select name="term" class="form-control" required>
-                                        <option selected="true" value="<?php echo $row1['term']; ?>"><?php echo $row1['term']; ?></option>
-                                        <?php
-                                        if ($row1['term'] != 'RT') {
-                                            echo "<option value='RT'>RT</option>";
-                                        }
-                                        if ($row1['term'] != 'SS') {
-                                            echo "<option value='SS'>SS</option>";
-                                        }
-                                        if ($row1['term'] != '1st 8 weeks') {
-                                            echo "<option value='1st 8 weeks'>1st 8 weeks</option>";
-                                        }
-                                        if ($row1['term'] != '2nd 8 weeks') {
-                                            echo "<option value='2nd 8 weeks'>2nd 8 weeks</option>";
                                         }
                                         ?>
 
@@ -268,13 +262,12 @@ $result2 = $mysqli->query($sql2);
                             <!--PAPER PENCIL EXAMS-->
                             <div class="row center-block">
                                 <div class=" form-group col-sm-5">
-                                    <label>If your examns are paper/pencil, please enter dates below</label>
+                                    <label>If your exams are paper/pencil, please enter dates below</label>
                                     <?php
                                     $sql = "SELECT label FROM paper_exam_dates";
                                     $result = $mysqli->query($sql);
-
-
-
+                                    $sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id' AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
+                                    $result2 = $mysqli->query($sql2);
                                     $j = 0;
                                     if ($result->num_rows > 0) {
                                         for ($i = 0; $i < 5; $i++) {
@@ -292,6 +285,14 @@ $result2 = $mysqli->query($sql2);
                                                 }
                                             }
                                             echo "</select>";
+                                            //getting id from this test to send it thru post
+                                            $date = $row2['test_date'];
+                                           // echo $date . "<br/>" . $id;
+                                            $sql_id = "SELECT id FROM paper_testing WHERE test_date = '$date' AND scheduled_id = '$id' AND state = 'Active' ";
+                                            $id_result = $mysqli->query($sql_id);
+                                            $id_row = $id_result->fetch_assoc();
+                                            $id_paper = $id_row['id'];
+                                            echo "<input type='hidden' name='_paper_proctor_date" . $i . "_id' value='$id_paper'>";
                                         }
                                     }
                                     ?>
@@ -303,7 +304,7 @@ $result2 = $mysqli->query($sql2);
                                             <?php
                                             $sql = "SELECT start_date,end_date FROM paper_exam_dates";
                                             $result = $mysqli->query($sql);
-                                            $sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id'";
+                                            $sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id'AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
                                             $result2 = $mysqli->query($sql2);
 
                                             if ($result->num_rows > 0) {
@@ -339,7 +340,7 @@ $result2 = $mysqli->query($sql2);
                                         <?php
                                         $sql = "SELECT start_date,end_date FROM paper_exam_dates";
                                         $result = $mysqli->query($sql);
-                                        $sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id'";
+                                        $sql2 = "SELECT * FROM paper_testing WHERE scheduled_id='$id'AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
                                         $result2 = $mysqli->query($sql2);
                                         if ($result->num_rows > 0) {
                                             for ($i = 0; $i < 5; $i++) {
@@ -379,7 +380,7 @@ $result2 = $mysqli->query($sql2);
                                     <?php
                                     $sql = "SELECT label FROM online_exam_dates";
                                     $result = $mysqli->query($sql);
-                                    $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id'";
+                                    $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id' AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
                                     $result2 = $mysqli->query($sql2);
                                     if ($result->num_rows > 0) {
                                         for ($i = 0; $i < 5; $i++) {
@@ -397,6 +398,13 @@ $result2 = $mysqli->query($sql2);
                                                 // echo "<option value=" . "'" . $online_exam_dates['label'] . "'" . ">" . $online_exam_dates['label'] . "</option>";
                                             }
                                             echo "</select>";
+                                            //getting id from this test to send it thru post
+                                            $date = $row2['test_date'];
+                                            $sql_id = "SELECT id FROM online_testing WHERE test_date = '$date' AND scheduled_id = '$id' AND state = 'Active'";
+                                            $id_result = $mysqli->query($sql_id);
+                                            $id_row = $id_result->fetch_assoc();
+                                            $id_online = $id_row['id'];
+                                            echo "<input type='hidden' name='_online_proctor_date" . $i . "_id' value='$id_online'>";
                                         }
                                     }
                                     ?>
@@ -408,7 +416,7 @@ $result2 = $mysqli->query($sql2);
                                             <?php
                                             $sql = "SELECT start_date,end_date FROM online_exam_dates";
                                             $result = $mysqli->query($sql);
-                                            $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id'";
+                                            $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id' AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
                                             $result2 = $mysqli->query($sql2);
                                             if ($result->num_rows > 0) {
                                                 for ($i = 0; $i < 5; $i++) {
@@ -441,7 +449,7 @@ $result2 = $mysqli->query($sql2);
                                         <label>Time Slot</label>
                                         <?php
                                         $sql = "SELECT start_date,end_date FROM paper_exam_dates";
-                                        $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id'";
+                                        $sql2 = "SELECT * FROM online_testing WHERE scheduled_id='$id' AND state = 'Active' ORDER BY scheduled_id ASC , test_date ASC";
                                         $result2 = $mysqli->query($sql2);
                                         $result = $mysqli->query($sql);
                                         if ($result->num_rows > 0) {
@@ -449,7 +457,7 @@ $result2 = $mysqli->query($sql2);
                                                 $result = $mysqli->query($sql);
                                                 $row2 = $result2->fetch_assoc();
 
-                                                echo "<select name='oline-time-slot-" . $i . "' class='form-control'><option selected='true'>None</option>";
+                                                echo "<select name='online-time-slot-" . $i . "' class='form-control'><option selected='true'>None</option>";
 
                                                 if ($row2['time_slot'] != 'Thursday 10:00 am - 2:00 pm') {
                                                     echo "<option value='Thursday 10:00 am - 2:00 pm'>Thursday 10:00 am - 2:00 pm</option>";
@@ -508,22 +516,22 @@ $result2 = $mysqli->query($sql2);
                             </div>
                             <!--TESTING INSTRUCTIONS-->
                             <div class="row center-block">
-                               
+
                                 <!--TESTING INSTRUCTIONS ROW1-->
                                 <div class="row center-block">
                                     <div class="col-sm-12 form-group">
-                                         <label>Testing Instructions</label>
+                                        <label>Testing Instructions</label>
                                         <?php $exam_instructions = $row1['exam_instructions']; ?>
-                                        <textarea name='test-instructions' class="form-control" rows="8"><?php
-                                        echo str_replace(',',PHP_EOL,$exam_instructions); ?></textarea>
+                                        <textarea name='test-instructions' class="form-control" rows="8"><?php echo str_replace(',', PHP_EOL, $exam_instructions); ?></textarea>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="row center-block">
                                     <div class="form-group col-sm-12">
                                         <label>Special Instructions</label>
-                                        <textarea name='special-instructions' class="form-control" placeholder="Put your special instructions here..."></textarea>
+                                        <?php $special_instructions = $row1['special_instructions']; ?>
+                                        <textarea name='special-instructions' class="form-control"><?php echo $special_instructions; ?></textarea>
                                     </div>
                                 </div>        
                                 <div class="row center-block form-group">
@@ -536,8 +544,8 @@ $result2 = $mysqli->query($sql2);
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!--Modal Submit Confirmation-->
                     <div id="modal-dialog" class="modal">
                         <div class="modal-dialog">
@@ -556,9 +564,9 @@ $result2 = $mysqli->query($sql2);
                             </div>
                         </div>
                     </div>
-                    
-                    
-                    
+
+
+
                 </form> 
             </div> <!-- /container -->
     </body>
