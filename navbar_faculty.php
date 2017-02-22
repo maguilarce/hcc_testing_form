@@ -22,7 +22,7 @@
             </ul>
               <ul class="nav navbar-nav pull-right">
                   <li  class="dropdown pull-right">
-                      <a href="#" class="dropdown-toggle pull-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user_name']; ?> <span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle pull-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class='glyphicon glyphicon-user'></span><?php echo " ".$_SESSION['user_name']; ?> <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                           <li><a href="allrecords.php">My Records</a></li>
                           <li><a href="signout.php">Sign Out</a></li>

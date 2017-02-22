@@ -21,24 +21,11 @@ $semester = "6172";
         <div class="container-fluid">
             <h1 class="well">All Test Records</h1>
             <div class="row">
-                <div class="col-md-12">
-                    <form action="#" method="get">
-                        <div class="input-group">
-                            <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-                            <input class="form-control" id="system-search" name="q" placeholder="Search for" required> 
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-
                 <div class="col-md-12 table-responsive">
                     <div id="content">
-                        <table id="mytable" style='font-size:11px' class="table table-list-search table-striped table-bordered">
+                        <table id="mytable" style='font-size:11px' class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-
                                     <th style="width:5%;font-size:13px">Action</th>
                                     <th style="width:5%;font-size:13px">Date Submitted</th>
                                     <th style="width:5%;font-size:13px">F.Name</th>
@@ -58,8 +45,6 @@ $semester = "6172";
                                     <th style="width:6%;font-size:13px">OL Time Slot</th>
                                     <th style="width:12%;font-size:13px">Exam Instructions</th>
                                     <th style="width:10%;font-size:13px">Special Instructions</th>
-
-
                             </thead>
                             <tbody>
                                 <?php
@@ -103,13 +88,13 @@ $semester = "6172";
                                         $edit_link1 = "<td id='row_val" . $row['id'] . "'>";
                                         $edit_link1 .= "<form action='edit.php' method='POST'>";
                                         $edit_link1 .= "<input type='hidden' name='id' value='" . $row['id'] . "'>";
-                                        $edit_link1 .= "<button data-target='confirm' type='submit' class='btn btn-primary btn-xs'>Edit</button>";
+                                        $edit_link1 .= "<button data-target='confirm' type='submit' data-placement='right' data-toggle='tooltip' title='Edit' class='btn btn-primary'><span class='glyphicon glyphicon-edit'></span></button>";
                                         $edit_link1 .= "</form>";
 
                                         //delete button
                                         $delete_link1 = "<br/>";
                                         //$delete_link1 .= "<button class='btn btnDelete' href=''>delete</button>";
-                                        $delete_link1 .= "<button type='button' class='btn btn-danger btn-xs' data-toggle='modal' data-target='#myModal" . $row['id'] . "'>Delete</button>";
+                                        $delete_link1 .= "<button type='button' data-placement='right' class='btn btn-danger' data-toggle='modal tooltip' title='Delete' data-target='#myModal" . $row['id'] . "'><span class='glyphicon glyphicon-trash'></span></button>";
 
                                         $delete_link1 .= "</td>";
 
@@ -204,6 +189,20 @@ $semester = "6172";
                                         }
                                     });
                         }
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $('#mytable').DataTable(
+                                    {
+                                        "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]]
+                                    }
+                            );
+                        });
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
                     </script>
 
 
