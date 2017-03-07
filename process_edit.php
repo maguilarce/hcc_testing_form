@@ -2,6 +2,7 @@
 
 date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
 session_start();
 /*
   Receiving all data from the testing form (validate through HTML atributes
@@ -23,7 +24,7 @@ $delivered_campus = $_POST['onsiteTest'];
 $campus_location = $_POST['campusLocation'];
 $exam_instructions = $_POST['test-instructions'];
 $special_instructions = $_POST['special-instructions'];
-$date = $home_campus = mysqli_real_escape_string($mysqli,date('Y-m-d H:i:s'));
+$date = date('Y-m-d H:i:s');
 $semester = '6172';
 //paper-pencil exams (up to 5 exams)
 $paper_proctor_dates = array();
@@ -119,13 +120,8 @@ for ($i = 0; $i < 5; $i++) {
         }
     }
 }
+log_entry($_SESSION['user_name']." has changed the test with id = ".$id );
+header("Location: allrecords.php?msg=1");
 
 
-
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-echo '<pre>';
-print_r($_SESSION);
-echo '</pre>';
 

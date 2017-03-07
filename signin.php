@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
 session_start();
 
 if(isset($_SESSION['id_usuario']))
@@ -18,7 +19,7 @@ if(!empty($_POST))
     $encrypted_password = sha1($password);
     
     //querying DB
-    $sql = "SELECT * FROM user_testing_form WHERE user_name = '$user' AND password = '$encrypted_password'";
+    $sql = "SELECT * FROM user_testing_form WHERE user_name = '$user' AND password = '$encrypted_password' AND state = 'Active'";
     $result = $mysqli->query($sql);
     $rows = $result->num_rows;
     
@@ -28,7 +29,7 @@ if(!empty($_POST))
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['id_type'] = $row['id_type'];
         $_SESSION['user_name'] = $row['user_name'];
-        
+        log_entry($_SESSION['user_name']." has signed in.");
         header("location: index.php");
     }
     else

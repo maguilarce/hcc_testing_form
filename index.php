@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
 session_start();
 include('head.php');
 if ($_SESSION['id_type'] == '1' || $_SESSION['id_type'] == '2') {
@@ -17,12 +18,38 @@ $user_name = $_SESSION['user_name'];
 $user_data = "SELECT * FROM faculty WHERE FacNo = '$user_id'";
 $result_user_data = $mysqli->query($user_data);
 $user_row = $result_user_data->fetch_assoc();
-$semester = "6172";
+$semester = $current_semester;
+$msg = 0;
+
+if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <body>
         <div class="container">
+
+            <?php
+            if ($msg != 0) {
+                if ($msg == 1) {
+                    echo "<div class='alert alert-success' role='alert'>
+                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                                <strong>Success!</strong> You have been signed in successfully!
+                            </div>";
+                }
+                if ($msg == 1) {
+                    
+                }
+                if ($msg == 2) {
+                    
+                }
+                if ($msg == 3) {
+                    
+                }
+            }
+            ?>
+
             <h1 class="well">HCC Online Testing Information Form</h1>
             <div class="col-lg-12 well">
                 <form role="form" id="form" method="post" action="submit.php" onsubmit="return confirm('Submit this form?')">
@@ -173,7 +200,7 @@ $semester = "6172";
                                 <div class=" form-group col-sm-5">
                                     <label>If your examns are paper/pencil, please enter dates below</label>
                                     <?php
-                                    $sql = "SELECT label FROM paper_exam_dates";
+                                    $sql = "SELECT label FROM paper_exam_dates WHERE term = '$semester'";
                                     $result = $mysqli->query($sql);
                                     if ($result->num_rows > 0) {
                                         for ($i = 0; $i < 5; $i++) {
@@ -195,7 +222,7 @@ $semester = "6172";
                                         <label>Proctor Date</label>
                                         <div class="row form-group">
                                             <?php
-                                            $sql = "SELECT start_date,end_date FROM paper_exam_dates";
+                                            $sql = "SELECT start_date,end_date FROM paper_exam_dates WHERE term = '$semester'";
                                             $result = $mysqli->query($sql);
                                             if ($result->num_rows > 0) {
                                                 for ($i = 0; $i < 5; $i++) {
@@ -222,7 +249,7 @@ $semester = "6172";
                                     <div class="form-group">
                                         <label>Time Slot</label>
                                         <?php
-                                        $sql = "SELECT start_date,end_date FROM paper_exam_dates";
+                                        $sql = "SELECT start_date,end_date FROM paper_exam_dates WHERE term = '$semester'";
                                         $result = $mysqli->query($sql);
                                         if ($result->num_rows > 0) {
                                             for ($i = 0; $i < 5; $i++) {
@@ -243,9 +270,9 @@ $semester = "6172";
                             <!--ONLINE EXAMS-->
                             <div class="row center-block">
                                 <div class=" form-group col-sm-5">
-                                    <label>If your examns are online, please enter dates below</label>
+                                    <label>If your exams are online, please enter dates below</label>
                                     <?php
-                                    $sql = "SELECT label FROM online_exam_dates";
+                                    $sql = "SELECT label FROM online_exam_dates WHERE term = '$semester'";
                                     $result = $mysqli->query($sql);
                                     if ($result->num_rows > 0) {
                                         for ($i = 0; $i < 5; $i++) {
@@ -268,7 +295,7 @@ $semester = "6172";
                                         <label>Proctor Date</label>
                                         <div class="form-group">
                                             <?php
-                                            $sql = "SELECT start_date,end_date FROM online_exam_dates";
+                                            $sql = "SELECT start_date,end_date FROM online_exam_dates WHERE term = '$semester'";
                                             $result = $mysqli->query($sql);
                                             if ($result->num_rows > 0) {
                                                 for ($i = 0; $i < 5; $i++) {
@@ -297,7 +324,7 @@ $semester = "6172";
                                     <div class="form-group">
                                         <label>Time Slot</label>
                                         <?php
-                                        $sql = "SELECT start_date,end_date FROM paper_exam_dates";
+                                        $sql = "SELECT start_date,end_date FROM paper_exam_dates WHERE term = '$semester'";
                                         $result = $mysqli->query($sql);
                                         if ($result->num_rows > 0) {
                                             for ($i = 0; $i < 5; $i++) {
@@ -421,7 +448,15 @@ $semester = "6172";
 
                 </form> 
 
-
+                <script>
+                    $(document).ready(function () {
+                        window.setTimeout(function () {
+                            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                                $(this).remove();
+                            });
+                        }, 4000);
+                    });
+                </script>
             </div> <!-- /container -->
     </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 include('dconnection.php');
 session_start();
+include('log_process.php');
 //print_r($_SESSION);
 include('head.php');
 if($_SESSION['id_type']=='1' || $_SESSION['id_type']=='2')

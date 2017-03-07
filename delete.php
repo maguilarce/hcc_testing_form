@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
 session_start();
 
 $id = $_POST['id'];
@@ -27,6 +28,7 @@ elseif(!$r3)
 }
 else  
 {
-header("Location: allrecords.php");
+    log_entry($_SESSION['user_name']." has deactivated the test with id = ".$id);
+    header("Location: allrecords.php?msg=2");
 }
 

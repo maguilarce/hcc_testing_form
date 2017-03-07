@@ -36,9 +36,9 @@
                 <li  class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle pull-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class='glyphicon glyphicon-user'></span><?php echo " ".$_SESSION['user_name']; ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="signout.php">Sign Out</a></li>
-                        <li><a href="#">Manage Users</a></li>
-                        <li><a href="#">Manage Term Info</a></li>
+                        <li><a href="signout.php"><span class='glyphicon glyphicon-log-out'></span>  Sign Out</a></li>
+                        <li><a href="manage_users.php"><span class='glyphicon glyphicon-cog'></span>  Manage Users</a></li>
+                        <li><a href="manage_term.php"><span class='glyphicon glyphicon-calendar'></span>  Manage Term Info</a></li>
 
                     </ul>
                 </li>

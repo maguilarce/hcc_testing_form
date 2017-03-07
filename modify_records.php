@@ -1,6 +1,6 @@
 <?php
 include('dconnection.php');
-
+include('log_process.php');
 if(isset($_POST['edit_row']))
 {
  $id=$_POST['row_id'];

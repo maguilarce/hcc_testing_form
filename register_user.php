@@ -1,5 +1,6 @@
 <?php 
 include('dconnection.php');
+include('log_process.php');
 //include('footer.php');
 ?>
 <!DOCTYPE html>

@@ -24,8 +24,8 @@
                   <li  class="dropdown pull-right">
                       <a href="#" class="dropdown-toggle pull-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class='glyphicon glyphicon-user'></span><?php echo " ".$_SESSION['user_name']; ?> <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                          <li><a href="allrecords.php">My Records</a></li>
-                          <li><a href="signout.php">Sign Out</a></li>
+                          <li><a href="allrecords.php"><span class='glyphicon glyphicon-th-list'></span>  My Records</a></li>
+                          <li><a href="signout.php"><span class='glyphicon glyphicon-log-out'></span>  Sign Out</a></li>
 
                       </ul>
                   </li>

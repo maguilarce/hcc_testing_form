@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
 session_start();
 //print_r($_SESSION);
 include('head.php');

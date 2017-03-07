@@ -1,5 +1,8 @@
 <?php
+date_default_timezone_set('America/Chicago');
 include('dconnection.php');
+include('log_process.php');
+session_start();
 /*
 Receiving all data from the testing form (validate through HTML atributes
  *  */
@@ -100,12 +103,14 @@ for($i=0;$i<5;$i++)
     }
     
 }
+//log_entry($_SESSION['user_name']." has entered the test with id = ".$id);
+$new_id = $last_id++;
+log_entry($_SESSION['user_name']." has entered the test with id = ".$new_id );
 
 
-
-echo $last_id;
+/*echo $last_id;
 echo '<pre>';  
 print_r($_POST);
-echo '</pre>';
+echo '</pre>';*/
 
-//header("Location: index.php");
+header("Location: allrecords.php?msg=3");
