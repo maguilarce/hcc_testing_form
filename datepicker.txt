@@ -1,4 +1,0 @@
-$("#dp").datepicker({
-  beforeShowDay: function(date){ return [date.getDay() == 0 || date.getDay() == 5 || date.getDay() == 6, ""]},
-  minDate:0
-});
